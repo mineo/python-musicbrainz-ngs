@@ -121,7 +121,7 @@ def parse_inner(inner_els, element):
 
 def parse_message(message):
 	s = message.read()
-	f = StringIO.StringIO(s.decode("utf-8"))
+	f = StringIO.StringIO(s)
 	tree = ET.ElementTree(file=f)
 	root = tree.getroot()
 	result = {}
