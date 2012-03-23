@@ -424,7 +424,7 @@ def _mb_request(path, method='GET', auth_required=False, client_required=False,
 
 	# Encode Unicode arguments using UTF-8.
 	for key, value in args.items():
-		if isinstance(value, str):
+		if isinstance(value, compat.str):
 			args[key] = value.encode('utf8')
 
 	# Construct the full URL for the request, including hostname and
