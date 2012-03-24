@@ -46,7 +46,7 @@ if is_py2:
 	from urllib import urlencode
 
 	bytes = str
-	str = unicode
+	unicode = unicode
 	basestring = basestring
 elif is_py3:
 	from urllib.request import HTTPPasswordMgr, HTTPDigestAuthHandler, Request,\
@@ -55,6 +55,6 @@ elif is_py3:
 	from http.client import HTTPException, BadStatusLine
 	from urllib.parse import urlunparse, urlencode
 
-	str = str
+	unicode = str
 	bytes = bytes
 	basestring = (str,bytes)
