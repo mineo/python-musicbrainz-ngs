@@ -185,9 +185,9 @@ def _check_filter_and_make_params(entity, includes, release_status=[], release_t
 	the filters can be used with the given includes. Return a params
 	dict that can be passed to _do_mb_query.
 	"""
-	if isinstance(release_status, basestring):
+	if isinstance(release_status, compat.basestring):
 		release_status = [release_status]
-	if isinstance(release_type, basestring):
+	if isinstance(release_type, compat.basestring):
 		release_type = [release_type]
 	_check_filter(release_status, VALID_RELEASE_STATUSES)
 	_check_filter(release_type, VALID_RELEASE_TYPES)
