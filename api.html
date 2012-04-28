@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API &mdash; musicbrainzngs 0.3dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="musicbrainzngs 0.3dev documentation" href="index.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">musicbrainzngs 0.3dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="musicbrainzngs.auth">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">auth</tt><big>(</big><em>u</em>, <em>p</em><big>)</big><a class="headerlink" href="#musicbrainzngs.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the username and password to be used in subsequent queries to
+the MusicBrainz XML API that require authentication.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.set_rate_limit">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">set_rate_limit</tt><big>(</big><em>new_interval=1.0</em>, <em>new_requests=1</em><big>)</big><a class="headerlink" href="#musicbrainzngs.set_rate_limit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the rate limiting behavior of the module. Must be invoked
+before the first Web service call.  Specify the number of requests
+(<cite>new_requests</cite>) that may be made per given interval
+(<cite>new_interval</cite>).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.set_hostname">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">set_hostname</tt><big>(</big><em>new_hostname</em><big>)</big><a class="headerlink" href="#musicbrainzngs.set_hostname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="searching">
+<span id="search-api"></span><h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
+<p>musicbrainzngs.search_artists</p>
+<p>musicbrainzngs.search_labels</p>
+<p>musicbrainzngs.search_recordings</p>
+<p>musicbrainzngs.search_release_groups</p>
+<p>musicbrainzngs.search_releases</p>
+<p>This looks stupid, needs a refernline docs anyway</p>
+<dl class="attribute">
+<dt id="musicbrainzngs.musicbrainz.VALID_INCLUDES">
+<tt class="descclassname">musicbrainz.</tt><tt class="descname">VALID_INCLUDES</tt><em class="property"> = {'echoprint': ['artists', 'releases'], 'collection': ['releases'], 'isrc': ['artists', 'releases', 'puids', 'echoprints', 'isrcs'], 'discid': ['artists', 'labels', 'recordings', 'release-groups', 'media', 'artist-credits', 'discids', 'puids', 'echoprints', 'isrcs', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels', 'recording-level-rels', 'work-level-rels'], 'artist': ['recordings', 'releases', 'release-groups', 'works', 'various-artists', 'discids', 'media', 'aliases', 'tags', 'user-tags', 'ratings', 'user-ratings', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels'], 'iswc': ['artists'], 'work': ['artists', 'aliases', 'tags', 'user-tags', 'ratings', 'user-ratings', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels'], 'label': ['releases', 'discids', 'media', 'aliases', 'tags', 'user-tags', 'ratings', 'user-ratings', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels'], 'recording': ['artists', 'releases', 'discids', 'media', 'artist-credits', 'tags', 'user-tags', 'ratings', 'user-ratings', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels'], 'puid': ['artists', 'releases', 'puids', 'echoprints', 'isrcs'], 'release': ['artists', 'labels', 'recordings', 'release-groups', 'media', 'artist-credits', 'discids', 'puids', 'echoprints', 'isrcs', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels', 'recording-level-rels', 'work-level-rels'], 'release-group': ['artists', 'releases', 'discids', 'media', 'artist-credits', 'tags', 'user-tags', 'ratings', 'user-ratings', 'artist-rels', 'label-rels', 'recording-rels', 'release-rels', 'release-group-rels', 'url-rels', 'work-rels']}</em><a class="headerlink" href="#musicbrainzngs.musicbrainz.VALID_INCLUDES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#searching">Searching</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="index.html">musicbrainzngs 0.3dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Alastair Porter et. al.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

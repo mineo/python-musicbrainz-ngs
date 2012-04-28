@@ -1,0 +1,204 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Usage &mdash; musicbrainzngs 0.3dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="musicbrainzngs 0.3dev documentation" href="index.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">musicbrainzngs 0.3dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>Use <a class="reference internal" href="api.html#musicbrainzngs.auth" title="musicbrainzngs.auth"><tt class="xref py py-meth docutils literal"><span class="pre">musicbrainzngs.auth()</span></tt></a></p>
+<p>Rate limiting blabla</p>
+</div>
+<div class="section" id="getting-data">
+<h2>Getting data<a class="headerlink" href="#getting-data" title="Permalink to this headline">¶</a></h2>
+<p>There are get_foo_by_bar methods
+They all work like this: blabla</p>
+<p><a class="reference internal" href="api.html#musicbrainzngs.musicbrainz.VALID_INCLUDES" title="musicbrainzngs.musicbrainz.VALID_INCLUDES"><tt class="xref py py-data docutils literal"><span class="pre">musicbrainzngs.musicbrainz.VALID_INCLUDES</span></tt></a></p>
+</div>
+<div class="section" id="searching">
+<h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
+<p>There are search_foo methods ( <a class="reference internal" href="api.html#search-api"><em>Searching</em></a>)
+They all work like that: blabla</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="sd">&quot;&quot;&quot;A simple script that searches for a release in the MusicBrainz</span>
+<span class="sd">database and prints out a few details about the first matching release.</span>
+
+<span class="sd">    $ ./releasesearch.py &quot;the beatles&quot; revolver</span>
+<span class="sd">    Revolver, by The Beatles</span>
+<span class="sd">    Released 1966-08-08 (Official)</span>
+<span class="sd">    MusicBrainz ID: b4b04cbf-118a-3944-9545-38a0a88ff1a2</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">musicbrainzngs</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">musicbrainzngs</span><span class="o">.</span><span class="n">set_useragent</span><span class="p">(</span>
+    <span class="s">&quot;python-musicbrainz-ngs-example&quot;</span><span class="p">,</span>
+    <span class="s">&quot;0.1&quot;</span><span class="p">,</span>
+    <span class="s">&quot;https://github.com/alastair/python-musicbrainz-ngs/&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">show_release_details</span><span class="p">(</span><span class="n">rel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Print some details about a release dictionary to stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">artist_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="s">&#39;artist&#39;</span><span class="p">][</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">[</span><span class="s">&#39;artist-credit&#39;</span><span class="p">]]</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;{}, by {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rel</span><span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">],</span> <span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">artist_names</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="s">&#39;date&#39;</span> <span class="ow">in</span> <span class="n">rel</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Released {} ({})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rel</span><span class="p">[</span><span class="s">&#39;date&#39;</span><span class="p">],</span> <span class="n">rel</span><span class="p">[</span><span class="s">&#39;status&#39;</span><span class="p">]))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;MusicBrainz ID: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rel</span><span class="p">[</span><span class="s">&#39;id&#39;</span><span class="p">]))</span>
+
+<span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Print a message to stderr and then exit with an error status.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="nb">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s">&quot;usage: {} ARTIST ALBUM&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">artist</span><span class="p">,</span> <span class="n">album</span> <span class="o">=</span> <span class="n">args</span>
+
+    <span class="c"># Keyword arguments to the &quot;search_*&quot; functions limit keywords to</span>
+    <span class="c"># specific fields. The &quot;limit&quot; keyword argument is special (like as</span>
+    <span class="c"># &quot;offset&quot;, not shown here) and specifies the number of results to</span>
+    <span class="c"># return.</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">musicbrainzngs</span><span class="o">.</span><span class="n">search_releases</span><span class="p">(</span><span class="n">artist</span><span class="o">=</span><span class="n">artist</span><span class="p">,</span> <span class="n">release</span><span class="o">=</span><span class="n">album</span><span class="p">,</span>
+                                            <span class="n">limit</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c"># On success, result is a dictionary with a single key:</span>
+    <span class="c"># &quot;release-list&quot;, which is a list of dictionaries.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s">&#39;release-list&#39;</span><span class="p">]:</span>
+        <span class="n">fail</span><span class="p">(</span><span class="s">&quot;no release found&quot;</span><span class="p">)</span>
+    <span class="n">show_release_details</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s">&#39;release-list&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="browsing">
+<h2>Browsing<a class="headerlink" href="#browsing" title="Permalink to this headline">¶</a></h2>
+<p>There are browse_foo methods
+They all work like that: blabla</p>
+</div>
+<div class="section" id="submitting">
+<h2>Submitting<a class="headerlink" href="#submitting" title="Permalink to this headline">¶</a></h2>
+<p>There are submit_foo methods</p>
+<p>They do not all work the same, or do they?</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage</a><ul>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#getting-data">Getting data</a></li>
+<li><a class="reference internal" href="#searching">Searching</a></li>
+<li><a class="reference internal" href="#browsing">Browsing</a></li>
+<li><a class="reference internal" href="#submitting">Submitting</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="next chapter">API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/usage.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="index.html">musicbrainzngs 0.3dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Alastair Porter et. al.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
