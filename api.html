@@ -75,11 +75,53 @@ before the first Web service call.  Specify the number of requests
 </div>
 <div class="section" id="searching">
 <span id="search-api"></span><h2>Searching<a class="headerlink" href="#searching" title="Permalink to this headline">¶</a></h2>
-<p>musicbrainzngs.search_artists</p>
-<p>musicbrainzngs.search_labels</p>
-<p>musicbrainzngs.search_recordings</p>
-<p>musicbrainzngs.search_release_groups</p>
-<p>musicbrainzngs.search_releases</p>
+<dl class="function">
+<dt id="musicbrainzngs.search_artists">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">search_artists</tt><big>(</big><em>query=''</em>, <em>limit=None</em>, <em>offset=None</em>, <em>**fields</em><big>)</big><a class="headerlink" href="#musicbrainzngs.search_artists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for artists by a free-form <cite>query</cite> string and/or any of
+the following keyword arguments specifying field queries:
+arid, artist, sortname, type, begin, end, comment, alias, country,
+gender, tag</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.search_labels">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">search_labels</tt><big>(</big><em>query=''</em>, <em>limit=None</em>, <em>offset=None</em>, <em>**fields</em><big>)</big><a class="headerlink" href="#musicbrainzngs.search_labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for labels by a free-form <cite>query</cite> string and/or any of
+the following keyword arguments specifying field queries:
+laid, label, sortname, type, code, country, begin, end, comment,
+alias, tag</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.search_recordings">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">search_recordings</tt><big>(</big><em>query=''</em>, <em>limit=None</em>, <em>offset=None</em>, <em>**fields</em><big>)</big><a class="headerlink" href="#musicbrainzngs.search_recordings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for recordings by a free-form <cite>query</cite> string and/or any of
+the following keyword arguments specifying field queries:
+rid, recording, isrc, arid, artist, artistname, creditname, reid,
+release, type, status, tracks, tracksrelease, dur, qdur, tnum,
+position, tag</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.search_release_groups">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">search_release_groups</tt><big>(</big><em>query=''</em>, <em>limit=None</em>, <em>offset=None</em>, <em>**fields</em><big>)</big><a class="headerlink" href="#musicbrainzngs.search_release_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for release groups by a free-form <cite>query</cite> string and/or
+any of the following keyword arguments specifying field queries:
+rgid, releasegroup, reid, release, arid, artist, artistname,
+creditname, type, tag</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="musicbrainzngs.search_releases">
+<tt class="descclassname">musicbrainzngs.</tt><tt class="descname">search_releases</tt><big>(</big><em>query=''</em>, <em>limit=None</em>, <em>offset=None</em>, <em>**fields</em><big>)</big><a class="headerlink" href="#musicbrainzngs.search_releases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for releases by a free-form <cite>query</cite> string and/or any of
+the following keyword arguments specifying field queries:
+reid, release, arid, artist, artistname, creditname, type, status,
+tracks, tracksmedium, discids, discidsmedium, mediums, date, asin,
+lang, script, country, date, label, catno, barcode, puid</p>
+</dd></dl>
+
 <p>This looks stupid, needs a refernline docs anyway</p>
 <dl class="attribute">
 <dt id="musicbrainzngs.musicbrainz.VALID_INCLUDES">
