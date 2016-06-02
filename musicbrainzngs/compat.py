@@ -39,12 +39,15 @@ is_py3 = (_ver[0] == 3)
 
 if is_py2:
 	from StringIO import StringIO
+	from urlparse import urlunparse
+	from urllib import urlencode
 
 	bytes = str
 	unicode = unicode
 	basestring = basestring
 elif is_py3:
 	from io import StringIO
+	from urllib.parse import urlunparse, urlencode
 
 	unicode = str
 	bytes = bytes
