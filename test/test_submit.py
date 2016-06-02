@@ -1,16 +1,22 @@
-import unittest
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import musicbrainzngs
+import requests_mock
 from musicbrainzngs import musicbrainz
 from test import _common
 
-class SubmitTest(unittest.TestCase):
+
+class SubmitTest(_common.RequestsMockingTestCase):
+    def setUp(self):
+        super(SubmitTest, self).setUp()
+
+        self.m.register_uri(requests_mock.ANY, requests_mock.ANY, text="<response/>")
+        musicbrainzngs.set_useragent("testapp", "0.1", "test@example.org")
+        musicbrainz.auth("user", "password")
+
     def test_submit_tags(self):
-        self.opener = _common.FakeOpener("<response/>")
-        musicbrainzngs.compat.build_opener = lambda *args: self.opener
         def make_xml(**kwargs):
             self.assertEqual({'artist_tags': {'mbid': ['one', 'two']}}, kwargs)
         oldmake_tag_request = musicbrainz.mbxml.make_tag_request
@@ -20,8 +26,6 @@ class SubmitTest(unittest.TestCase):
         musicbrainz.mbxml.make_tag_request = oldmake_tag_request
 
     def test_submit_single_tag(self):
-        self.opener = _common.FakeOpener("<response/>")
-        musicbrainzngs.compat.build_opener = lambda *args: self.opener
         def make_xml(**kwargs):
             self.assertEqual({'artist_tags': {'mbid': ['single']}}, kwargs)
         oldmake_tag_request = musicbrainz.mbxml.make_tag_request
@@ -29,4 +33,3 @@ class SubmitTest(unittest.TestCase):
 
         musicbrainz.submit_tags(artist_tags={"mbid": "single"})
         musicbrainz.mbxml.make_tag_request = oldmake_tag_request
-
