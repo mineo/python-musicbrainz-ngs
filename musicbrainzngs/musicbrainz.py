@@ -21,6 +21,7 @@ from requests.packages.urllib3.util.retry import Retry
 from musicbrainzngs import mbxml
 from musicbrainzngs import util
 from musicbrainzngs import compat
+from musicbrainzngs import cache
 
 _version = "0.7dev"
 _log = logging.getLogger("musicbrainzngs")
@@ -317,6 +318,7 @@ def _docstring_impl(name, values):
 
 user = password = ""
 hostname = "musicbrainz.org"
+_cache = None
 _client = ""
 _useragent = ""
 
@@ -347,6 +349,11 @@ def set_hostname(new_hostname):
     You can also include a port: 'localhost:8000'."""
     global hostname
     hostname = new_hostname
+
+def set_cache(new_cache):
+    """Set the cache (defaults to None)"""
+    global _cache
+    _cache = new_cache
 
 # Rate limiting.
 
@@ -597,9 +604,18 @@ def _mb_request(path, method='GET', auth_required=AUTH_NO,
         data=body,
     )
 
-    resp = _safe_read(req)
+    try:
+        cache_value = cache._get_from_cache(_cache, url=url, args=newargs,
+                                            method=method)
+        return parser_fun(cache_value)
+    except cache.NotInCache:
+        pass
 
+    resp = _safe_read(req)
+    cache._set_cache(_cache, resp.content, url=url, args=newargs,
+                     method=method)
     return parser_fun(resp.content)
+
 
 def _get_auth_type(entity, id, includes):
     """ Some calls require authentication. This returns
