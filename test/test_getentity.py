@@ -12,7 +12,7 @@ class UrlTest(unittest.TestCase):
     """ Test that the correct URL is generated when a search query is made """
 
     def setUp(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
 
         musicbrainzngs.set_useragent("a", "1")

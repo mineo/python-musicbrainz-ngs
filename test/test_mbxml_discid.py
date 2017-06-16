@@ -14,7 +14,7 @@ class UrlTest(unittest.TestCase):
     """ Test that the correct URL is generated when a search query is made """
 
     def setUp(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
 
         musicbrainzngs.set_useragent("test", "1")
@@ -26,7 +26,7 @@ class UrlTest(unittest.TestCase):
 
         # one include
         musicbrainzngs.get_releases_by_discid("xp5tz6rE4OHrBafj0bLfDRMGK48-",
-                includes=["recordings"])
+                                              includes="recordings")
         self.assertEqual("http://musicbrainz.org/ws/2/discid/xp5tz6rE4OHrBafj0bLfDRMGK48-?inc=recordings", self.opener.get_url())
 
         # more than one include
@@ -44,7 +44,7 @@ class GetDiscIdTest(unittest.TestCase):
         Test that the id attribute of the disc is read.
         """
         res = _common.open_and_parse_test_data(self.datadir, "xp5tz6rE4OHrBafj0bLfDRMGK48-.xml")
-        self.assertEqual(res["disc"]["id"], "xp5tz6rE4OHrBafj0bLfDRMGK48-")
+        self.assertEqual(res.disc.id, "xp5tz6rE4OHrBafj0bLfDRMGK48-")
 
     def testTrackCount(self):
         """
@@ -53,28 +53,27 @@ class GetDiscIdTest(unittest.TestCase):
 
         # discid without pregap track
         res = _common.open_and_parse_test_data(self.datadir, "xp5tz6rE4OHrBafj0bLfDRMGK48-.xml")
-        self.assertEqual(res["disc"]["offset-count"], 8)
+        self.assertEqual(res.disc.offset_list.count, 8)
 
         # discid with pregap track
         # (the number of tracks does not count the pregap "track")
         res = _common.open_and_parse_test_data(self.datadir, "f7agNZK1HMQ2WUWq9bwDymw9aHA-.xml")
-        self.assertEqual(res["disc"]["offset-count"], 13)
+        self.assertEqual(res.disc.offset_list.count, 13)
 
     def testOffsets(self):
         """
         Test that the correct list of offsets is returned.
         """
         res = _common.open_and_parse_test_data(self.datadir, "xp5tz6rE4OHrBafj0bLfDRMGK48-.xml")
-        offsets_res = res["disc"]["offset-list"]
+        offsets_res = res.disc.offset_list
         offsets_correct = [182, 33322, 52597, 73510, 98882, 136180, 169185, 187490]
         for i in range(len(offsets_correct)):
-            self.assertEqual(offsets_res[i], offsets_correct[i])
-            self.assertTrue(isinstance(offsets_res[i], int))
+            self.assertEqual(int(offsets_res.offset[i].valueOf_), offsets_correct[i])
 
     def testReleaseList(self):
         """
         Test that a release list of correct size is given.
         """
         res = _common.open_and_parse_test_data(self.datadir, "xp5tz6rE4OHrBafj0bLfDRMGK48-.xml")
-        self.assertEqual(res["disc"]["release-count"], 3)
-        self.assertEqual(res["disc"]["release-count"], len(res["disc"]["release-list"]))
+        self.assertEqual(res.disc.release_list.count, 3)
+        self.assertEqual(res.disc.release_list.count, len(res.disc.release_list.release))

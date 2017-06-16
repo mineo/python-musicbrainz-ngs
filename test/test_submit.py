@@ -22,7 +22,7 @@ class SubmitTest(unittest.TestCase):
         musicbrainz.password = ""
 
     def test_submit_tags(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
         def make_xml(**kwargs):
             self.assertEqual({'artist_tags': {'mbid': ['one', 'two']}}, kwargs)
@@ -33,7 +33,7 @@ class SubmitTest(unittest.TestCase):
         musicbrainz.mbxml.make_tag_request = oldmake_tag_request
 
     def test_submit_single_tag(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
         def make_xml(**kwargs):
             self.assertEqual({'artist_tags': {'mbid': ['single']}}, kwargs)
@@ -42,4 +42,3 @@ class SubmitTest(unittest.TestCase):
 
         musicbrainz.submit_tags(artist_tags={"mbid": "single"})
         musicbrainz.mbxml.make_tag_request = oldmake_tag_request
-

@@ -14,23 +14,20 @@ class GetArtistTest(unittest.TestCase):
 
     def testArtistAliases(self):
         res = _common.open_and_parse_test_data(self.datadir, "0e43fe9d-c472-4b62-be9e-55f971a023e1-aliases.xml")
-        aliases = res["artist"]["alias-list"]
-        self.assertEqual(len(aliases), 28)
+        aliases = res.artist.alias_list
+        self.assertEqual(len(aliases.alias), 28)
 
-        a0 = aliases[0]
-        self.assertEqual(a0["alias"], "Prokofief")
-        self.assertEqual(a0["sort-name"], "Prokofief")
+        a0 = aliases.alias[0]
+        self.assertEqual(a0.valueOf_, "Prokofief")
+        self.assertEqual(a0.sort_name, "Prokofief")
 
-        a17 = aliases[17]
-        self.assertEqual(a17["alias"], "Sergei Sergeyevich Prokofiev")
-        self.assertEqual(a17["sort-name"], "Prokofiev, Sergei Sergeyevich")
-        self.assertEqual(a17["locale"], "en")
-        self.assertEqual(a17["primary"], "primary")
+        a17 = aliases.alias[17]
+        self.assertEqual(a17.valueOf_, "Sergei Sergeyevich Prokofiev")
+        self.assertEqual(a17.sort_name, "Prokofiev, Sergei Sergeyevich")
+        self.assertEqual(a17.locale, "en")
+        self.assertEqual(a17.primary, "primary")
 
-        res = _common.open_and_parse_test_data(self.datadir, "2736bad5-6280-4c8f-92c8-27a5e63bbab2-aliases.xml")
-        self.assertFalse("alias-list" in res["artist"])
-    
     def testArtistTargets(self):
         res = _common.open_and_parse_test_data(self.datadir, "b3785a55-2cf6-497d-b8e3-cfa21a36f997-artist-rels.xml")
-        self.assertTrue('target-credit' in res['artist']['artist-relation-list'][0])
-        self.assertEqual(res['artist']['artist-relation-list'][0]["target-credit"], "TAO")
+        self.assertTrue(hasattr(res.artist.relation_list[0].relation[0], "target_credit"))
+        self.assertEqual(res.artist.relation_list[0].relation[0].target_credit, "TAO")

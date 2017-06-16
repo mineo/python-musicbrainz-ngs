@@ -17,10 +17,11 @@ try:
 except ImportError:
     import io as StringIO
 
+
 class FakeOpener(OpenerDirector):
     """ A URL Opener that saves the URL requested and
     returns a dummy response or raises an exception """
-    def __init__(self, response="<response/>", exception=None):
+    def __init__(self, response=b"<response/>", exception=None):
         self.myurl = None
         self.headers = None
         self.response = response
@@ -69,6 +70,7 @@ class Timecop(object):
         time.time = self.orig['time']
         time.sleep = self.orig['sleep']
 
+
 def open_and_parse_test_data(datadir, filename):
     """ Opens an XML file dumped from the MusicBrainz web service and returns
     the parses it.
@@ -79,5 +81,6 @@ def open_and_parse_test_data(datadir, filename):
 
     """
     with open(join(datadir, filename), 'rb') as msg:
-        res = musicbrainzngs.mbxml.parse_message(msg)
+        from io import BytesIO
+        res = musicbrainzngs.mbxml.parse_message(msg.read())
     return res

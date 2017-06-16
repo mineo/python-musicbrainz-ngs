@@ -12,7 +12,7 @@ class ArgumentTest(unittest.TestCase):
     (useragent, authentication)."""
 
     def setUp(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
         self.orig_do_rate_limit = musicbrainz.do_rate_limit
         musicbrainz.do_rate_limit = False
@@ -52,7 +52,7 @@ class MethodTest(unittest.TestCase):
     using the correct HTTP method."""
 
     def setUp(self):
-        self.opener = _common.FakeOpener("<response/>")
+        self.opener = _common.FakeOpener(b"<response/>")
         musicbrainzngs.compat.build_opener = lambda *args: self.opener
 
         musicbrainz.auth("user", "password")
